@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Childhood Validation Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .quiz-container { max-width: 600px; margin: auto; }
+        .question { font-size: 1.2em; margin-bottom: 10px; }
+        .answers { margin-bottom: 20px; }
+        .results { font-size: 1.5em; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Childhood Validation Quiz</h1>
+
+    <div id="question-container">
+        <p class="question">How did your caregivers react when you made a mistake?</p>
+        <div class="answers">
+            <input type="radio" name="q1" value="1"> They were supportive and encouraging.<br>
+            <input type="radio" name="q1" value="0"> They were critical or dismissive.<br>
+        </div>
+
+        <p class="question">How often did you receive praise for your efforts?</p>
+        <div class="answers">
+            <input type="radio" name="q2" value="1"> Regularly and sincerely.<br>
+            <input type="radio" name="q2" value="0"> Rarely, and it felt empty.<br>
+        </div>
+
+        <button onclick="calculateResults()">Submit</button>
+    </div>
+
+    <div id="result-container" class="results" style="display:none;">
+        <p id="result-text"></p>
+    </div>
+</div>
+
+<script>
+    function calculateResults() {
+        var score = 0;
+        var answers = document.getElementsByName('q1');
+        for (var i = 0; i < answers.length; i++) {
+            if (answers[i].checked) {
+                score += parseInt(answers[i].value);
+            }
+        }
+
+        answers = document.getElementsByName('q2');
+        for (var i = 0; i < answers.length; i++) {
+            if (answers[i].checked) {
+                score += parseInt(answers[i].value);
+            }
+        }
+
+        var resultText = "";
+        if (score === 2) {
+            resultText = "You were likely validated as a child!";
+        } else if (score === 1) {
+            resultText = "You may have had some validation, but it was inconsistent.";
+        } else {
+            resultText = "It seems you may have been under-validated as a child.";
+        }
+
+        document.getElementById("question-container").style.display = "none";
+        document.getElementById("result-container").style.display = "block";
+        document.getElementById("result-text").innerText = resultText;
+    }
+</script>
+
+</body>
+</html>
