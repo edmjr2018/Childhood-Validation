@@ -1,74 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Childhood Validation Quiz</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .quiz-container { max-width: 600px; margin: auto; }
-        .question { font-size: 1.2em; margin-bottom: 10px; }
-        .answers { margin-bottom: 20px; }
-        .results { font-size: 1.5em; font-weight: bold; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validation Questionnaire</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+    .question { margin-bottom: 20px; }
+    #result { margin-top: 30px; font-weight: bold; border: 1px solid #ccc; padding: 20px; background: #f9f9f9; }
+    .disclaimer { margin-top: 20px; font-size: 0.9em; color: #555; }
+  </style>
 </head>
 <body>
-
-<div class="quiz-container">
-    <h1>Childhood Validation Quiz</h1>
-
-    <div id="question-container">
-        <p class="question">How did your caregivers react when you made a mistake?</p>
-        <div class="answers">
-            <input type="radio" name="q1" value="1"> They were supportive and encouraging.<br>
-            <input type="radio" name="q1" value="0"> They were critical or dismissive.<br>
-        </div>
-
-        <p class="question">How often did you receive praise for your efforts?</p>
-        <div class="answers">
-            <input type="radio" name="q2" value="1"> Regularly and sincerely.<br>
-            <input type="radio" name="q2" value="0"> Rarely, and it felt empty.<br>
-        </div>
-
-        <button onclick="calculateResults()">Submit</button>
+  <h1>Childhood Validation Questionnaire</h1>
+  <p>Please answer the following questions honestly. Your responses will help you reflect on your childhood experiences and how they might relate to your current traits or behaviors.</p>
+  
+  <form id="quizForm">
+    <div class="question">
+      <p>1. How did your caregivers respond when you were upset?</p>
+      <label><input type="radio" name="q1" value="3"> They comforted me and listened.</label><br>
+      <label><input type="radio" name="q1" value="2"> They told me to stop crying or "get over it."</label><br>
+      <label><input type="radio" name="q1" value="1"> They distracted me or ignored my feelings.</label><br>
+      <label><input type="radio" name="q1" value="0"> They didn’t seem to notice or respond.</label>
     </div>
 
-    <div id="result-container" class="results" style="display:none;">
-        <p id="result-text"></p>
+    <div class="question">
+      <p>2. When you accomplished something as a child, how did your caregivers react?</p>
+      <label><input type="radio" name="q2" value="3"> They celebrated it with me.</label><br>
+      <label><input type="radio" name="q2" value="2"> They said it was good but could have been better.</label><br>
+      <label><input type="radio" name="q2" value="1"> They didn’t seem very interested.</label><br>
+      <label><input type="radio" name="q2" value="0"> They focused on my mistakes instead.</label>
     </div>
-</div>
 
-<script>
-    function calculateResults() {
-        var score = 0;
-        var answers = document.getElementsByName('q1');
-        for (var i = 0; i < answers.length; i++) {
-            if (answers[i].checked) {
-                score += parseInt(answers[i].value);
-            }
-        }
+    <div class="question">
+      <p>3. How often did you feel comfortable sharing your thoughts or feelings with your caregivers?</p>
+      <label><input type="radio" name="q3" value="3"> Almost always.</label><br>
+      <label><input type="radio" name="q3" value="2"> Sometimes, depending on the situation.</label><br>
+      <label><input type="radio" name="q3" value="1"> Rarely or never.</label><br>
+      <label><input type="radio" name="q3" value="0"> I didn’t feel the need to share.</label>
+    </div>
 
-        answers = document.getElementsByName('q2');
-        for (var i = 0; i < answers.length; i++) {
-            if (answers[i].checked) {
-                score += parseInt(answers[i].value);
-            }
-        }
+    <div class="question">
+      <p>4. How were mistakes or failures handled in your household?</p>
+      <label><input type="radio" name="q4" value="3"> They were treated as learning opportunities.</label><br>
+      <label><input type="radio" name="q4" value="2"> They were met with criticism or punishment.</label><br>
+      <label><input type="radio" name="q4" value="1"> They were ignored or downplayed.</label><br>
+      <label><input type="radio" name="q4" value="0"> I was expected not to make mistakes.</label>
+    </div>
 
-        var resultText = "";
-        if (score === 2) {
-            resultText = "You were likely validated as a child!";
-        } else if (score === 1) {
-            resultText = "You may have had some validation, but it was inconsistent.";
-        } else {
-            resultText = "It seems you may have been under-validated as a child.";
-        }
+    <button type="button" onclick="calculateResult()">Submit</button>
+  </form>
 
-        document.getElementById("question-container").style.display = "none";
-        document.getElementById("result-container").style.display = "block";
-        document.getElementById("result-text").innerText = resultText;
+  <div id="result"></div>
+
+  <div class="disclaimer">
+    <p><strong>Disclaimer:</strong> These results are not a diagnosis or psychological assessment but are designed to encourage self-reflection and awareness. For a deeper understanding of your experiences and how they influence your life, consider consulting a licensed therapist or psychologist.</p>
+  </div>
+
+  <script>
+    function calculateResult() {
+      let totalScore = 0;
+      const form = document.getElementById('quizForm');
+      const formData = new FormData(form);
+
+      // Calculate total score
+      for (let value of formData.values()) {
+        totalScore += parseInt(value);
+      }
+
+      // Determine result and provide insights
+      let resultText = '';
+      if (totalScore >= 10) {
+        resultText = `<strong>Highly Validated:</strong> Your responses suggest that you experienced consistent emotional support as a child. This foundation likely contributes to your confidence, emotional resilience, and ability to make independent decisions as an adult.`;
+      } else if (totalScore >= 6) {
+        resultText = `<strong>Moderately Validated:</strong> Your responses indicate that you received emotional support in some areas of your childhood but not consistently. This may result in a mix of confidence and self-doubt, depending on the situation. You may find yourself seeking external validation at times.`;
+      } else if (totalScore >= 3) {
+        resultText = `<strong>Occasionally Validated:</strong> Your responses suggest that emotional support and validation were inconsistent. This may lead to struggles with self-esteem, a tendency toward perfectionism, or sensitivity to criticism as an adult. Reflecting on these patterns can be a step toward personal growth.`;
+      } else {
+        resultText = `<strong>Rarely or Not Validated:</strong> Your responses indicate that you may have frequently felt dismissed or misunderstood as a child. This could contribute to challenges with self-esteem, emotional regulation, or relationships. Recognizing these patterns can be empowering as you explore ways to build confidence and emotional resilience.`;
+      }
+
+      // Display result
+      document.getElementById('result').innerHTML = resultText;
     }
-</script>
-
+  </script>
 </body>
 </html>
